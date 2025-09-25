@@ -11,14 +11,14 @@ public final class AuthDto {
     private AuthDto() {
     }
 
-    public record Request(@NotBlank String nickname, @NotEmpty String password) {
+    public record Request(@NotBlank String username, @NotEmpty String password) {
     }
 
     public record Response(
             UUID id,
             Instant createdAt,
             Instant updatedAt,
-            String nickname,
+            String username,
             Instant lastActivatedAt
     ) {
     }

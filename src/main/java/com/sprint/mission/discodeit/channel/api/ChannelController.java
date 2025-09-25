@@ -1,4 +1,4 @@
-package com.sprint.mission.discodeit.channel.controller;
+package com.sprint.mission.discodeit.channel.api;
 
 import com.sprint.mission.discodeit.channel.ChannelDto.Request;
 import com.sprint.mission.discodeit.channel.ChannelDto.Request.PublicRequest;
@@ -14,7 +14,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/channels")
-public class ChannelController {
+public class ChannelController implements ChannelApiSpec {
 
     private final ChannelService channelService;
 

@@ -13,7 +13,7 @@ public final class AuthMapper {
                 userResponse.id(),
                 userResponse.createdAt(),
                 userResponse.updatedAt(),
-                userResponse.nickname(),
+                userResponse.username(),
                 userResponse.lastActivatedAt()
         );
     }

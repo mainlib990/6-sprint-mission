@@ -18,10 +18,9 @@ public final class UserMapper {
 
     public static User from(Request request) {
         return User.of(
-                new UserCredentials(request.nickname(), request.password()),
+                new UserCredentials(request.username(), request.password()),
                 UserStatus.of(),
-                request.name(),
-                request.mail()
+                request.email()
         );
     }
 
@@ -30,9 +29,8 @@ public final class UserMapper {
                 user.getId(),
                 user.getCreatedAt(),
                 user.getUpdatedAt(),
-                user.getName(),
-                user.getMail(),
-                user.getUserCredentials().nickname()
+                user.getEmail(),
+                user.getUserCredentials().username()
         );
     }
 
@@ -41,9 +39,8 @@ public final class UserMapper {
                 user.getId(),
                 user.getCreatedAt(),
                 user.getUpdatedAt(),
-                user.getName(),
-                user.getMail(),
-                user.getUserCredentials().nickname(),
+                user.getEmail(),
+                user.getUserCredentials().username(),
                 userProfileId,
                 online
         );
@@ -54,9 +51,8 @@ public final class UserMapper {
                 user.getId(),
                 user.getCreatedAt(),
                 user.getUpdatedAt(),
-                user.getName(),
-                user.getMail(),
-                user.getUserCredentials().nickname(),
+                user.getEmail(),
+                user.getUserCredentials().username(),
                 user.getUserStatus().lastActivatedAt()
         );
     }

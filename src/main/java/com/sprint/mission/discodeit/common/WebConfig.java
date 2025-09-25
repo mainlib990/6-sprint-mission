@@ -9,6 +9,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void configurePathMatch(PathMatchConfigurer configurer) {
-        configurer.addPathPrefix("/api", _ -> true);
+        configurer.addPathPrefix("/api", clazz -> clazz.getPackage()
+                .getName().startsWith("com.sprint.mission.discodeit"));
     }
 }

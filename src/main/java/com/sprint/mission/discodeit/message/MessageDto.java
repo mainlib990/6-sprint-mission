@@ -3,6 +3,7 @@ package com.sprint.mission.discodeit.message;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.lang.Nullable;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.Instant;
 import java.util.Collections;
@@ -18,7 +19,7 @@ public final class MessageDto {
             @NotBlank String content,
             @NotNull UUID channelId,
             @NotNull UUID authorId,
-            @Nullable List<@NotBlank String> messageAttachmentsBase64
+            @Nullable List<@NotBlank MultipartFile> messageAttachmentsBase64
     ) {
         public Request {
             if (messageAttachmentsBase64 == null) {

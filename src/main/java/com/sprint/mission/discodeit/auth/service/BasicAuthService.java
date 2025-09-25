@@ -24,7 +24,7 @@ public class BasicAuthService implements AuthService {
     @Override
     public Response login(Request request) {
         UserDto.ResponseWithLastActivatedAt userResponse =
-                userService.getUserByNicknameAndPassword(request.nickname(), request.password());
+                userService.getUserByUsernameAndPassword(request.username(), request.password());
         Instant now = instantSource.instant();
         userResponse = userService.updateUserById(userResponse.id(), now);
         return AuthMapper.toResponse(userResponse);

@@ -14,17 +14,10 @@ public final class UserDto {
     }
 
     public record Request(
-            @NotBlank String name,
-            @NotNull @Email String mail,
-            @NotBlank String nickname,
+            @NotBlank String username,
             @NotBlank String password,
-            @Nullable String profileImageBase64
+            @NotNull @Email String email
     ) {
-        public Request {
-            if (profileImageBase64 == null) {
-                profileImageBase64 = "";
-            }
-        }
     }
 
     public record RequestWithLastActivateAt(@NotNull Instant lastActivatedAt) {
@@ -34,9 +27,8 @@ public final class UserDto {
             UUID id,
             Instant createdAt,
             Instant updatedAt,
-            String name,
-            String mail,
-            String nickname
+            String username,
+            String email
     ) {
     }
 
@@ -44,9 +36,8 @@ public final class UserDto {
             UUID id,
             Instant createdAt,
             Instant updatedAt,
-            String name,
-            String mail,
-            String nickname,
+            String username,
+            String email,
             @Nullable UUID userProfileId,
             Boolean online
     ) {
@@ -56,9 +47,8 @@ public final class UserDto {
             UUID id,
             Instant createdAt,
             Instant updatedAt,
-            String name,
-            String mail,
-            String nickname,
+            String username,
+            String email,
             Instant lastActivatedAt
     ) {
     }

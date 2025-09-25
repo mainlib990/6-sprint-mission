@@ -1,4 +1,4 @@
-package com.sprint.mission.discodeit.auth.controller;
+package com.sprint.mission.discodeit.auth.api;
 
 import com.sprint.mission.discodeit.auth.AuthDto.Request;
 import com.sprint.mission.discodeit.auth.AuthDto.Response;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class AuthController {
+public class AuthController implements AuthApiSpec {
 
     private final AuthService authService;
 
@@ -18,6 +18,7 @@ public class AuthController {
         this.authService = authService;
     }
 
+    @Override
     @PostMapping("/login")
     public ResponseEntity<Response> login(@RequestBody @Valid Request request) {
         Response body = authService.login(request);

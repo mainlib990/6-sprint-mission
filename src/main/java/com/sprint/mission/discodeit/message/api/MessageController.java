@@ -1,4 +1,4 @@
-package com.sprint.mission.discodeit.message.controller;
+package com.sprint.mission.discodeit.message.api;
 
 import com.sprint.mission.discodeit.message.MessageDto.Request;
 import com.sprint.mission.discodeit.message.MessageDto.Response;
@@ -7,13 +7,14 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Set;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/messages")
-public class MessageController {
+public class MessageController implements MessageApiSpec {
 
     private final MessageService messageService;
 
@@ -21,18 +22,21 @@ public class MessageController {
         this.messageService = messageService;
     }
 
+    @Override
     @PostMapping
-    public ResponseEntity<Response> createMessage(@RequestBody @Valid Request request) {
-        Response body = messageService.createMessage(request);
+    public ResponseEntity<Response> createMessage(@RequestBody @Valid Request request, @RequestPart MultipartFile messageAttachmentRequest) {
+        Response body = messageService.createMessage(request, messageAttachmentRequest);
         return new ResponseEntity<>(body, HttpStatus.CREATED);
     }
 
+    @Override
     @GetMapping
     public ResponseEntity<Set<Response>> getMessagesByChannelId(@RequestParam UUID channelId) {
         Set<Response> body = messageService.getMessagesByChannelId(channelId);
         return ResponseEntity.ok(body);
     }
 
+    @Override
     @PutMapping("/{id}")
     public ResponseEntity<Response> updateMessageById(
             @PathVariable UUID id,
@@ -42,6 +46,7 @@ public class MessageController {
         return ResponseEntity.ok(body);
     }
 
+    @Override
     @DeleteMapping("/{id}")
     public ResponseEntity<Response> deleteMessageById(@PathVariable UUID id) {
         messageService.deleteMessageById(id);

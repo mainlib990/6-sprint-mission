@@ -1,4 +1,4 @@
-package com.sprint.mission.discodeit.binarycontent.controller;
+package com.sprint.mission.discodeit.binarycontent.api;
 
 import com.sprint.mission.discodeit.binarycontent.BinaryContentDto.Response;
 import com.sprint.mission.discodeit.binarycontent.service.BinaryContentService;
@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/binary-contents")
-public class BinaryContentController {
+public class BinaryContentController implements BinaryContentApiSpec {
 
     private final BinaryContentService binaryContentService;
 
@@ -20,6 +20,7 @@ public class BinaryContentController {
         this.binaryContentService = binaryContentService;
     }
 
+    @Override
     @GetMapping("/{id}")
     public ResponseEntity<Response> getBinaryContentById(@PathVariable UUID id) {
         Response body = binaryContentService.getBinaryContentById(id);

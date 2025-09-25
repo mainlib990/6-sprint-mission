@@ -1,7 +1,8 @@
-package com.sprint.mission.discodeit.message.controller;
+package com.sprint.mission.discodeit.message.api;
 
 import com.sprint.mission.discodeit.common.exception.DiscodeitException;
 import com.sprint.mission.discodeit.message.domain.MessageException;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ public class MessageExceptionHandler {
 
     private static final Logger log = LoggerFactory.getLogger(MessageExceptionHandler.class);
 
+    @ApiResponse(responseCode = "400", description = "Bad Request")
     @ExceptionHandler(MessageException.class)
     public ProblemDetail handleMessageException(DiscodeitException ex) {
         log.warn("Message error occurred", ex);

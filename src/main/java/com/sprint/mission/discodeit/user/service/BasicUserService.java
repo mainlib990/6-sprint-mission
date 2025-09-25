@@ -13,6 +13,7 @@ import com.sprint.mission.discodeit.user.domain.UserCredentials;
 import com.sprint.mission.discodeit.user.domain.UserStatus;
 import com.sprint.mission.discodeit.user.repository.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.Instant;
 import java.time.InstantSource;
@@ -39,14 +40,14 @@ public class BasicUserService implements UserService {
     }
 
     @Override
-    public Response createUser(Request request) {
+    public Response createUser(Request request, MultipartFile userProfile) {
         User user = UserMapper.from(request);
         user = userRepository.save(user);
-        if (!request.profileImageBase64().isEmpty()) {
+        if (!userProfile.isEmpty()) {
             var userProfileRequest = new BinaryContentDto.Request(
                     OwnerType.USER_PROFILE,
                     user.getId(),
-                    request.profileImageBase64()
+                    userProfile
             );
             binaryContentService.createBinaryContent(userProfileRequest);
         }
@@ -65,8 +66,8 @@ public class BasicUserService implements UserService {
     }
 
     @Override
-    public ResponseWithLastActivatedAt getUserByNicknameAndPassword(String nickname, String password) {
-        User user = userRepository.findByNicknameAndPassword(nickname, password);
+    public ResponseWithLastActivatedAt getUserByUsernameAndPassword(String username, String password) {
+        User user = userRepository.findByUsernameAndPassword(username, password);
         return UserMapper.toResponseWithLastActivatedAt(user);
     }
 
@@ -86,20 +87,20 @@ public class BasicUserService implements UserService {
     }
 
     @Override
-    public Response updateUserById(UUID id, Request request) {
+    public Response updateUserById(UUID id, Request request, MultipartFile userUpdateRequest) {
         User user = userRepository.findById(id);
         binaryContentService.getUserProfileByUserId(user.getId())
                 .ifPresent(response -> binaryContentService.deleteBinaryContentById(response.id()));
-        if (!request.profileImageBase64().isEmpty()) {
+        if (!userUpdateRequest.isEmpty()) {
             var userProfileRequest = new BinaryContentDto.Request(
                     OwnerType.USER_PROFILE,
                     user.getId(),
-                    request.profileImageBase64()
+                    userUpdateRequest
             );
             binaryContentService.createBinaryContent(userProfileRequest);
         }
-        UserCredentials userCredentials = new UserCredentials(request.nickname(), request.password());
-        user = user.withUserCredentials(userCredentials).with(request.name(), request.mail());
+        UserCredentials userCredentials = new UserCredentials(request.username(), request.password());
+        user = user.withUserCredentials(userCredentials).with(request.email());
         user = userRepository.save(user);
         return UserMapper.toResponse(user);
     }

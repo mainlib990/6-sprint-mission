@@ -9,6 +9,7 @@ import com.sprint.mission.discodeit.message.MessageMapper;
 import com.sprint.mission.discodeit.message.domain.Message;
 import com.sprint.mission.discodeit.message.repository.MessageRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Set;
 import java.util.UUID;
@@ -30,10 +31,10 @@ public class BasicMessageService implements MessageService {
     }
 
     @Override
-    public Response createMessage(Request request) {
+    public Response createMessage(Request request, MultipartFile messageAttachment) {
         Message message = MessageMapper.from(request);
         message = messageRepository.save(message);
-        for (String messageAttachmentBase64 : request.messageAttachmentsBase64()) {
+        for (MultipartFile messageAttachmentBase64 : request.messageAttachmentsBase64()) {
             var messageAttachmentRequest = new BinaryContentDto.Request(
                     OwnerType.MESSAGE_ATTACHMENT,
                     message.getId(),

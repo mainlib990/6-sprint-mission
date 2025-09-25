@@ -26,13 +26,13 @@ public abstract class AbstractUserRepository implements UserRepository {
             ));
         }
         validator = validator.and(Validator.uniqueKey(
-                userKey -> userKey.getUserCredentials().nickname(),
+                userKey -> userKey.getUserCredentials().username(),
                 userKey -> new DiscodeitPersistenceException(
-                        "User nickname already exists: '%s'".formatted(userKey.getUserCredentials().nickname()))
+                        "User username already exists: '%s'".formatted(userKey.getUserCredentials().username()))
         )).and(Validator.uniqueKey(
-                User::getMail,
+                User::getEmail,
                 userKey -> new DiscodeitPersistenceException(
-                        "User mail already exists: '%s'".formatted(userKey.getMail()))
+                        "User email already exists: '%s'".formatted(userKey.getEmail()))
         ));
         Map<UUID, User> data = getData();
         User validated = validator.validate(data, user);
@@ -52,15 +52,15 @@ public abstract class AbstractUserRepository implements UserRepository {
     }
 
     @Override
-    public User findByNicknameAndPassword(String nickname, String password) {
+    public User findByUsernameAndPassword(String username, String password) {
         Map<UUID, User> data = getData();
-        Map<String, User> nicknameToUser = groupByNickname(data);
-        User user = nicknameToUser.get(nickname);
+        Map<String, User> usernameToUser = groupByUsername(data);
+        User user = usernameToUser.get(username);
         if (user == null) {
-            throw new DiscodeitPersistenceException("User not found for Nickname: '%s'".formatted(nickname));
+            throw new DiscodeitPersistenceException("User not found for Username: '%s'".formatted(username));
         }
         if (!user.getUserCredentials().password().equals(password)) {
-            throw new DiscodeitPersistenceException("User not found for Password: '%s'".formatted(nickname));
+            throw new DiscodeitPersistenceException("User not found for Password: '%s'".formatted(username));
         }
         return user;
     }
@@ -78,10 +78,10 @@ public abstract class AbstractUserRepository implements UserRepository {
         flush(data);
     }
 
-    private Map<String, User> groupByNickname(Map<UUID, User> data) {
+    private Map<String, User> groupByUsername(Map<UUID, User> data) {
         return data.values()
                 .stream()
-                .collect(Collectors.toMap(user -> user.getUserCredentials().nickname(), Function.identity()));
+                .collect(Collectors.toMap(user -> user.getUserCredentials().username(), Function.identity()));
     }
 
     protected abstract Map<UUID, User> getData();

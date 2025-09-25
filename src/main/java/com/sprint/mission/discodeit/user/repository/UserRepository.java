@@ -7,5 +7,5 @@ import java.util.UUID;
 
 public interface UserRepository extends CrudRepository<User, UUID> {
 
-    User findByNicknameAndPassword(String nickname, String password);
+    User findByUsernameAndPassword(String username, String password);
 }

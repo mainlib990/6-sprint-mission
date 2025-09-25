@@ -4,6 +4,7 @@ import com.sprint.mission.discodeit.binarycontent.BinaryContentDto.Request;
 import com.sprint.mission.discodeit.binarycontent.BinaryContentDto.Response;
 import com.sprint.mission.discodeit.binarycontent.domain.BinaryContent;
 
+import java.io.IOException;
 import java.util.Base64;
 
 public final class BinaryContentMapper {
@@ -12,11 +13,15 @@ public final class BinaryContentMapper {
     }
 
     public static BinaryContent from(Request request) {
-        return BinaryContent.of(
-                request.ownerType(),
-                request.ownerId(),
-                Base64.getDecoder().decode(request.bytesBase64())
-        );
+        try {
+            return BinaryContent.of(
+                    request.ownerType(),
+                    request.ownerId(),
+                    Base64.getDecoder().decode(request.bytesBase64().getBytes())
+            );
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static Response toResponse(BinaryContent binaryContent) {

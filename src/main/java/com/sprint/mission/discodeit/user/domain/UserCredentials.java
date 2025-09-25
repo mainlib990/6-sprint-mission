@@ -1,26 +1,26 @@
 package com.sprint.mission.discodeit.user.domain;
 
-import com.sprint.mission.discodeit.user.domain.UserException.BlankUserNicknameException;
 import com.sprint.mission.discodeit.user.domain.UserException.BlankUserPasswordException;
+import com.sprint.mission.discodeit.user.domain.UserException.BlankUsernameExcpetion;
 
 import java.io.Serial;
 import java.io.Serializable;
 
 public record UserCredentials(
-        String nickname,
+        String username,
         String password
 ) implements Serializable {
 
     @Serial
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 2L;
 
     public UserCredentials {
-        if (nickname.isBlank()) {
-            throw new BlankUserNicknameException();
+        if (username.isBlank()) {
+            throw new BlankUsernameExcpetion();
         }
         if (password.isBlank()) {
             throw new BlankUserPasswordException();
         }
-        nickname = nickname.trim();
+        username = username.trim();
     }
 }

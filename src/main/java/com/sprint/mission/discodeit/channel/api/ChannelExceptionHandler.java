@@ -1,7 +1,8 @@
-package com.sprint.mission.discodeit.channel.controller;
+package com.sprint.mission.discodeit.channel.api;
 
 import com.sprint.mission.discodeit.channel.domain.ChannelException;
 import com.sprint.mission.discodeit.common.exception.DiscodeitException;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -13,7 +14,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class ChannelExceptionHandler {
 
     private static final Logger log = LoggerFactory.getLogger(ChannelExceptionHandler.class);
-    
+
+    @ApiResponse(responseCode = "400", description = "Bad Request")
     @ExceptionHandler(ChannelException.class)
     public ProblemDetail handleChannelException(DiscodeitException ex) {
         log.warn("Channel error occurred", ex);

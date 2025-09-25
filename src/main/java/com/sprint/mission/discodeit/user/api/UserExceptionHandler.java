@@ -1,7 +1,8 @@
-package com.sprint.mission.discodeit.user.controller;
+package com.sprint.mission.discodeit.user.api;
 
 import com.sprint.mission.discodeit.common.exception.DiscodeitException;
 import com.sprint.mission.discodeit.user.domain.UserException;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ public class UserExceptionHandler {
 
     private static final Logger log = LoggerFactory.getLogger(UserExceptionHandler.class);
 
+    @ApiResponse(responseCode = "400", description = "Bad Request")
     @ExceptionHandler(UserException.class)
     public ProblemDetail handleUserException(DiscodeitException ex) {
         log.warn("User error occurred", ex);

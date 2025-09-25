@@ -8,10 +8,10 @@ public sealed class UserException extends DiscodeitException {
         super(message);
     }
 
-    public static final class BlankUserNicknameException extends UserException {
+    public static final class BlankUsernameExcpetion extends UserException {
 
-        public BlankUserNicknameException() {
-            super("User nickname cannot be blank.");
+        public BlankUsernameExcpetion() {
+            super("Username cannot be blank");
         }
     }
 
@@ -22,17 +22,10 @@ public sealed class UserException extends DiscodeitException {
         }
     }
 
-    public static final class BalnkUserNameExcpetion extends UserException {
-
-        public BalnkUserNameExcpetion() {
-            super("User name cannot be blank");
-        }
-    }
-
     public static final class InvalidUserEmailFormatException extends UserException {
 
-        public InvalidUserEmailFormatException(String mail) {
-            super("User mail pattern is invalid: '%s'".formatted(mail));
+        public InvalidUserEmailFormatException(String email) {
+            super("User email pattern is invalid: '%s'".formatted(email));
         }
     }
 }

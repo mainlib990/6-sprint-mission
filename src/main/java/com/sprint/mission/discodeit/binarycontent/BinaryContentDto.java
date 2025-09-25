@@ -3,6 +3,7 @@ package com.sprint.mission.discodeit.binarycontent;
 import com.sprint.mission.discodeit.binarycontent.domain.BinaryContent.OwnerType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -15,7 +16,7 @@ public final class BinaryContentDto {
     public record Request(
             @NotNull OwnerType ownerType,
             @NotNull UUID ownerId,
-            @NotBlank String bytesBase64
+            @NotBlank MultipartFile bytesBase64
     ) {
     }
 

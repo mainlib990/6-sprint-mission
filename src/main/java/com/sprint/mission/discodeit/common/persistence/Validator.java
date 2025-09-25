@@ -14,14 +14,14 @@ public interface Validator<T> {
 
     static <T, U, X extends RuntimeException> Validator<T> uniqueKey(
             Function<? super T, ? extends U> keyExtractor,
-            Function<? super T, ? extends X> exceptionSupplier
+            Function<? super T, ? extends X> exceptionGenerator
     ) {
         return (data, t) -> {
             boolean exists = data.values()
                     .stream()
                     .anyMatch(value -> keyExtractor.apply(value).equals(keyExtractor.apply(t)));
             if (exists) {
-                throw exceptionSupplier.apply(t);
+                throw exceptionGenerator.apply(t);
             }
             return t;
         };
